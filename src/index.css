@@ -29,12 +29,20 @@ a:hover {
 
 body {
   margin: 0;
- 
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+p{
+  font-family: "Turret Road", serif;
+}
+
+header {
+  font-family: "Iceland", serif;
+  font-weight: 100;
 }
 
 button {
