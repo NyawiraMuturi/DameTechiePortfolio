@@ -1,11 +1,44 @@
 import { useState, useEffect } from "react";
 import bubble from './assets/icons/bubble.png'
-import profile from './assets/images/placeholderimg.png'
-import { Github, MicVocal } from "lucide-react";
+import alt1 from './assets/images/alt1.png'
+import alt2 from './assets/images/alt2.png'
+import alt3 from './assets/images/alt3.png'
+import alt4 from './assets/images/alt4.png'
+import { Github, MicVocal, PencilLine } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "./components/ui/card";
+import { useRepositories, useArticles } from "./hooks";
 
 function App() {
   const [gridSize, setGridSize] = useState({ rows: 0, cols: 0 });
+  const [currentImage, setCurrentImage] = useState(alt1);
+
+  const githubUsername = 'NyawiraMuturi';
+  const hashnodeUsername = 'DameTechie';
+
+  const { data: repositories, isLoading: reposLoading, error: reposError } = useRepositories(githubUsername);
+  const { data: articles, isLoading: articlesLoading, error: articlesError } = useArticles();
+
+
+
+  useEffect(() => {
+    const images = [alt1, alt2, alt3, alt4];
+    let index = 0;
+
+    const interval = setInterval(() => {
+      index = (index + 1) % images.length;
+      setCurrentImage(images[index]);
+    }, 350);
+
+    const timeout = setTimeout(() => {
+      clearInterval(interval);
+      setCurrentImage(alt1);
+    }, 4500);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, []);
 
   useEffect(() => {
     const updateGridSize = () => {
@@ -20,6 +53,14 @@ function App() {
     window.addEventListener("resize", updateGridSize);
     return () => window.removeEventListener("resize", updateGridSize);
   }, []);
+
+  if (reposLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (reposError) {
+    return <p>Error: {reposError?.message}</p>;
+  }
 
   return (
     <div className="relative h-screen w-screen bg-[#efe5e0]">
@@ -42,11 +83,11 @@ function App() {
       <div className="relative z-10 flex flex-row p-[4%] space-x-10 w-full">
         <div className="w-2/5">
           <img src={bubble} className="w-5/6" />
-          <div className="absolute left-[9.5%] top-[20%] ">
+          <div className="absolute lg:left-[9%] lg:top-[22%]">
             <header className="text-2xl">Hi, I am Albina Muturi, <br /> but feel free to call me <br /> Dame-Techie.</header>
           </div>
-          <div className="absolute left-[8%] top-[40%]">
-            <img src={profile} className="w-4/5" />
+          <div className="absolute lg:left-[7.5%] lg:top-[35%]">
+            <img src={currentImage} className="" alt="Profile Animation" />
           </div>
         </div>
         <div className="w-full px-[2%]">
@@ -64,11 +105,20 @@ function App() {
 
                 </CardHeader>
                 <CardContent>
-                  <p>card name</p>
-                  <p>card name</p>
-                  <p>card name</p>
-                  <p>card name</p>
-                  <p>card name</p>
+                  <ul>
+                    {repositories?.map((repo: any) => (
+                      <li key={repo.id}>
+                        <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
+                          {repo.name}
+                        </a>
+                        <p>
+                          {repo?.description?.length > 50
+                            ? `${repo.description.slice(0, 50)}...`
+                            : repo.description}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
 
                 </CardContent>
                 <CardFooter className="flex justify-end">
@@ -101,14 +151,11 @@ function App() {
               <CardHeader>
                 <div className="flex justify-between items-center">
                   <p>Sometimes I write</p>
-                  <img src={bubble} alt="Icon" style={{ width: '32px', height: '32px' }} />
+                  <PencilLine />
                 </div>
               </CardHeader>
               <CardContent>
-                <p>card name</p>
-                <p>card name</p>
-                <p>card name</p>
-                <p>card name</p>
+                Something random
               </CardContent>
               <CardFooter className="flex justify-end">
                 <p>More of those</p>
