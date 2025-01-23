@@ -4,20 +4,19 @@ import alt1 from './assets/images/alt1.png'
 import alt2 from './assets/images/alt2.png'
 import alt3 from './assets/images/alt3.png'
 import alt4 from './assets/images/alt4.png'
-import { Github, MicVocal, PencilLine } from "lucide-react";
+import { Github, MicVocal, PencilLine, Linkedin, Mail, Twitch } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "./components/ui/card";
-import { useRepositories, useArticles } from "./hooks";
+import { articles, talks } from "./lib/data";
+import { useRepositories } from "./hooks";
+
+
 
 function App() {
   const [gridSize, setGridSize] = useState({ rows: 0, cols: 0 });
   const [currentImage, setCurrentImage] = useState(alt1);
 
-  const githubUsername = 'NyawiraMuturi';
-  const hashnodeUsername = 'DameTechie';
-
-  const { data: repositories, isLoading: reposLoading, error: reposError } = useRepositories(githubUsername);
-  const { data: articles, isLoading: articlesLoading, error: articlesError } = useArticles();
-
+  const { data: repositories, isLoading: reposLoading, error: reposError } = useRepositories('NyawiraMuturi');
+  // const { data: blogs, isLoading: blogsLoading, error: blogsError } = useHashnodeBlogs('DameTechie');
 
 
   useEffect(() => {
@@ -59,7 +58,7 @@ function App() {
   }
 
   if (reposError) {
-    return <p>Error: {reposError?.message}</p>;
+    return <p>Error</p>;
   }
 
   return (
@@ -83,10 +82,10 @@ function App() {
       <div className="relative z-10 flex flex-row p-[4%] space-x-10 w-full">
         <div className="w-2/5">
           <img src={bubble} className="w-5/6" />
-          <div className="absolute lg:left-[9%] lg:top-[22%]">
+          <div className="absolute lg:left-[9%] lg:top-[18%]">
             <header className="text-2xl">Hi, I am Albina Muturi, <br /> but feel free to call me <br /> Dame-Techie.</header>
           </div>
-          <div className="absolute lg:left-[7.5%] lg:top-[35%]">
+          <div className="absolute lg:left-[7%] lg:top-[30%]">
             <img src={currentImage} className="" alt="Profile Animation" />
           </div>
         </div>
@@ -129,38 +128,86 @@ function App() {
             </Card>
 
             <Card className="bg-[#edbcc0]">
-              <CardHeader>
-                <div className="flex justify-between items-center">
-                  <p>Technical Talks</p>
-                  <MicVocal />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p>card name</p>
-                <p>card name</p>
-                <p>card name</p>
-                <p>card name</p>
-                <p>card name</p>
-              </CardContent>
-              <CardFooter className="flex justify-end">
-                <p>More of those</p>
-              </CardFooter>
+              <div className="border-dashed border-2 border-[#f57f04] rounded-md">
+                <CardHeader>
+                  <div className="flex justify-between items-center">
+                    <p>Technical Talks</p>
+                    <MicVocal />
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <ul>
+                    {talks?.map((talk: any) => (
+                      <li key={talk.id}>
+                        <a href={talk.link} target="_blank" rel="noopener noreferrer">
+                          {talk.title}
+                        </a>
+                        <p>
+                          {talk?.description?.length > 50
+                            ? `${talk.description.slice(0, 50)}...`
+                            : talk.description}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+                <CardFooter className="flex justify-end">
+                  <p>More of those</p>
+                </CardFooter>
+              </div>
             </Card>
 
             <Card className="bg-[#a6dd73]">
-              <CardHeader>
-                <div className="flex justify-between items-center">
-                  <p>Sometimes I write</p>
-                  <PencilLine />
-                </div>
-              </CardHeader>
-              <CardContent>
-                Something random
-              </CardContent>
-              <CardFooter className="flex justify-end">
-                <p>More of those</p>
-              </CardFooter>
+              <div className="border-dashed border-2 border-[#f57f04] rounded-md">
+                <CardHeader>
+                  <div className="flex justify-between items-center">
+                    <p>Sometimes I write</p>
+                    <PencilLine />
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <ul>
+                    {articles?.map((article: any) => (
+                      <li key={article.id}>
+                        <a href={article.link} target="_blank" rel="noopener noreferrer">
+                          {article.title}
+                        </a>
+                        <p>
+                          {article?.description?.length > 50
+                            ? `${article.description.slice(0, 50)}...`
+                            : article.description}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+                <CardFooter className="flex justify-end">
+                  <p>More of those</p>
+                </CardFooter>
+              </div>
             </Card>
+
+            <div className="flex items-center justify-center space-x-6">
+              <div className="bg-[#edbcc0] rounded-full p-5">
+                <Github size={42} strokeWidth={1} />
+              </div>
+
+              <div className="bg-[#70cdc5] rounded-full p-5">
+                <Linkedin size={42} strokeWidth={1} />
+              </div>
+
+              <div className="bg-[#a6dd73] rounded-full p-5">
+                <Mail size={42} strokeWidth={1} />
+              </div>
+
+              <div className="bg-[#fec268] rounded-full p-5">
+                <PencilLine size={42} strokeWidth={1} />
+              </div>
+              <div className="bg-[#8184d2] rounded-full p-5">
+                <Twitch size={42} strokeWidth={1} />
+              </div>
+
+            </div>
           </div>
 
         </div>
