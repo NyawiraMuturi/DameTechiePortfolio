@@ -6,6 +6,7 @@ import alt3 from './assets/images/alt3.png'
 import alt4 from './assets/images/alt4.png'
 import { Github, MicVocal, PencilLine, Linkedin, Mail, Twitch } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "./components/ui/card";
+import { Button } from "./components/ui/button";
 import { articles, talks } from "./lib/data";
 import { useRepositories } from "./hooks";
 
@@ -82,7 +83,7 @@ function App() {
       <div className="relative z-10 flex flex-row p-[4%] space-x-10 w-full">
         <div className="w-2/5">
           <img src={bubble} className="w-5/6" />
-          <div className="absolute lg:left-[9%] lg:top-[18%]">
+          <div className="absolute lg:left-[9%] lg:top-[17%]">
             <header className="text-2xl">Hi, I am Albina Muturi, <br /> but feel free to call me <br /> Dame-Techie.</header>
           </div>
           <div className="absolute lg:left-[7%] lg:top-[30%]">
@@ -95,10 +96,10 @@ function App() {
           </div>
           <div className="grid grid-cols-2 gap-4 ">
             <Card className="bg-[#70cdc5]">
-              <div className="border-dashed border-2 border-[#f57f04] rounded-md">
+              <div className="border-dashed border-2 border-[#346664] rounded-md h-full">
                 <CardHeader>
                   <div className="flex justify-between items-center">
-                    <p className="">Github</p>
+                    <p className="font-black">Github</p>
                     <Github />
                   </div>
 
@@ -106,59 +107,92 @@ function App() {
                 <CardContent>
                   <ul>
                     {repositories?.map((repo: any) => (
-                      <li key={repo.id}>
-                        <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
-                          {repo.name}
+                      <li key={repo.id} className="flex items-center space-x-4 my-3 hover:border-[#346664] hover:border-r hover:border-l rounded-tr-lg rounded-bl-lg">
+                        <div>
+                          <Github strokeWidth={1} color="#346664" />
+                        </div>
+
+                        <a
+                          href={repo.html_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-black font-medium hover:text-black">
+                          <div>
+                            <span>  {repo.name}</span>
+                            <p>
+                              {repo?.description?.length > 50
+                                ? `${repo.description.slice(0, 50)}...`
+                                : repo.description}
+                            </p>
+                          </div>
                         </a>
-                        <p>
-                          {repo?.description?.length > 50
-                            ? `${repo.description.slice(0, 50)}...`
-                            : repo.description}
-                        </p>
                       </li>
                     ))}
                   </ul>
 
                 </CardContent>
-                <CardFooter className="flex justify-end">
-                  <p>More of those</p>
+                <CardFooter className="flex justify-end items-center">
+                  <a
+                    href="https://github.com/NyawiraMuturi"
+                    target="_blank"
+                  >
+                    <Button className="bg-[#346664] hover:bg-[#346664] border-none text-white hover:text-white focus:ring-inset-0 font-bold"> More of These</Button>
+                  </a>
                 </CardFooter>
               </div>
 
             </Card>
 
             <Card className="bg-[#edbcc0]">
-              <div className="border-dashed border-2 border-[#f57f04] rounded-md">
+              <div className="border-dashed border-2 border-[#ec4469] rounded-md h-full">
                 <CardHeader>
-                  <div className="flex justify-between items-center">
-                    <p>Technical Talks</p>
+                  <div className="flex justify-between items-center font-black">
+                    <p >Technical Talks</p>
                     <MicVocal />
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <ul>
+                  <ul >
                     {talks?.map((talk: any) => (
-                      <li key={talk.id}>
-                        <a href={talk.link} target="_blank" rel="noopener noreferrer">
-                          {talk.title}
+                      <li key={talk.id} className="flex items-center space-x-4 my-3 hover:border-[#ec4469] hover:border-r hover:border-l rounded-tr-lg rounded-bl-lg">
+                        <div>
+                          <MicVocal strokeWidth={1} color="#ec4469" />
+                        </div>
+                        <a
+                          href={talk.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block cursor-pointer no-underline text-black hover:text-black"
+                        >
+                          <div>
+                            <span className=" font-medium block">
+                              {talk.title}
+                            </span>
+                            <p >
+                              {talk?.description?.length > 50
+                                ? `${talk.description.slice(0, 50)}...`
+                                : talk.description}
+                            </p>
+                          </div>
                         </a>
-                        <p>
-                          {talk?.description?.length > 50
-                            ? `${talk.description.slice(0, 50)}...`
-                            : talk.description}
-                        </p>
+
                       </li>
                     ))}
                   </ul>
                 </CardContent>
-                <CardFooter className="flex justify-end">
-                  <p>More of those</p>
+                <CardFooter className="flex justify-end items-center">
+                  <a
+                    href="https://www.linkedin.com/in/nyawira-muturi/recent-activity/all/"
+                    target="_blank"
+                  >
+                    <Button className="bg-[#ec4469] hover:bg-[#ec4469] border-none text-white hover:text-white focus:ring-inset-0 font-bold">More of These</Button>
+                  </a>
                 </CardFooter>
               </div>
             </Card>
 
             <Card className="bg-[#a6dd73]">
-              <div className="border-dashed border-2 border-[#f57f04] rounded-md">
+              <div className="border-dashed border-2 border-[#4c7438] rounded-md">
                 <CardHeader>
                   <div className="flex justify-between items-center">
                     <p>Sometimes I write</p>
@@ -168,21 +202,39 @@ function App() {
                 <CardContent>
                   <ul>
                     {articles?.map((article: any) => (
-                      <li key={article.id}>
-                        <a href={article.link} target="_blank" rel="noopener noreferrer">
-                          {article.title}
+                      <li key={article.id} className="flex items-center space-x-4 my-3 hover:border-[#4c7438] hover:border-r hover:border-l rounded-tr-lg rounded-bl-lg">
+                        <div>
+                          <PencilLine strokeWidth={1} color="#4c7438" />
+                        </div>
+                        <a
+                          href={article.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block cursor-pointer no-underline text-black hover:text-black"
+                        >
+                          <div>
+                            <span> {article.title}</span>
+                            <p>
+                              {article?.description?.length > 50
+                                ? `${article.description.slice(0, 50)}...`
+                                : article.description}
+                            </p>
+                          </div>
+
+
                         </a>
-                        <p>
-                          {article?.description?.length > 50
-                            ? `${article.description.slice(0, 50)}...`
-                            : article.description}
-                        </p>
+
                       </li>
                     ))}
                   </ul>
                 </CardContent>
                 <CardFooter className="flex justify-end">
-                  <p>More of those</p>
+                  <a
+                    href="https://dame-techie.hashnode.dev/"
+                    target="_blank"
+                  >
+                    <Button className="bg-[#4c7438] hover:bg-[#4c7438] border-none text-white hover:text-white focus:ring-inset-0 font-bold">More of These</Button>
+                  </a>
                 </CardFooter>
               </div>
             </Card>

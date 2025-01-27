@@ -22,7 +22,7 @@ const fetchRepositories = async (username: string): Promise<GitHubRepository[]> 
 
         return response.data
             .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-            .slice(0, 4);
+            .slice(0, 3);
     } catch (error) {
         throw new Error(`Failed to fetch repositories: ${error instanceof Error ? error.message : String(error)} `);
     }
