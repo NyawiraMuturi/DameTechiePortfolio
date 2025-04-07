@@ -9,6 +9,12 @@ export default {
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
+		  screens: {
+			'sm': '640px',
+			'md': '1024px',
+			'lg': '1536px',
+
+		  },
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
