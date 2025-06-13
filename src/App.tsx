@@ -14,9 +14,7 @@ import {
   Twitch,
 } from "lucide-react";
 import VideoCard from "./components/ui/videoCard";
-import { Card, CardContent, CardHeader } from "./components/ui/card";
-import { Button } from "./components/ui/button";
-import { articles, talks } from "./lib/data";
+import { Card, CardHeader } from "./components/ui/card";
 import { useRepositories } from "./hooks";
 
 function App() {
@@ -24,7 +22,7 @@ function App() {
   const [currentImage, setCurrentImage] = useState(alt1);
 
   const {
-    data: repositories,
+    // data: repositories,
     isLoading: reposLoading,
     error: reposError,
   } = useRepositories("NyawiraMuturi");
@@ -79,12 +77,12 @@ function App() {
 
   return (
     <div className="relative flex flex-col items-center justify-center lg:min-h-screen md:min-h-screen w-screen bg-[#efe5e0]">
-      <div>
-        <p className="lg:text-4xl md:text-3xl  text-center font-black relative z-10">
-          What does this Software engineer do? You wonder... <br /> Well, here
-          is My Digital Footprint{" "}
-        </p>
-      </div>
+<div>
+  <p className="lg:text-4xl md:text-3xl text-center relative z-10 font-black">
+    Hi, I'm Albina &#128075; <br />
+    Nice to virtual meet you!
+  </p>
+</div>
       <div
         className="absolute inset-0 grid pointer-events-none z-0"
         style={{
@@ -184,8 +182,7 @@ function App() {
                 type="external"
                 externalUrl="https://www.tiktok.com/@its_hanti/video/7471143024106507526"
                 thumbnailSrc={alt6}
-                title="A Virtual Hi..."
-                
+                title="Now we are not strangers..."
               />
             </Card>
 

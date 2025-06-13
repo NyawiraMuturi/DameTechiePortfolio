@@ -1,23 +1,30 @@
 import { useState, useRef } from 'react';
-import { Play, ExternalLink, CirclePlay } from 'lucide-react';
+import { Play, CirclePlay } from 'lucide-react';
+
+interface VideoCardProps {
+  videoSrc?: string;
+  thumbnailSrc: string;
+  title?: string;
+  externalUrl?: string;
+  embedUrl?: string;
+  type?: 'video' | 'embed' | 'external';
+}
 
 const VideoCard = ({ 
   videoSrc, 
-  thumbnailSrc, 
+  thumbnailSrc,
   title = "Video", 
   externalUrl,
   embedUrl,
   type = "video"
-}) => {
+}: VideoCardProps) => {
   const [showEmbed, setShowEmbed] = useState(false);
-
 
   if (type === "embed") {
     return (
       <div className="relative w-full h-full bg-[#8184d2] rounded-lg overflow-hidden">
         <div className="border-dashed border-2 border-[#f58003] rounded-md h-full relative">
           {!showEmbed ? (
-           
             <div className="absolute inset-0 flex items-center justify-center">
               <img
                 src={thumbnailSrc}
@@ -55,7 +62,7 @@ const VideoCard = ({
     return (
       <div 
         className="relative w-full h-full bg-[#8184d2] rounded-lg overflow-hidden cursor-pointer"
-        onClick={() => window.open(externalUrl, '_blank')}
+        onClick={() => externalUrl && window.open(externalUrl, '_blank')}
       >
         <div className="border-dashed border-2 border-[#f58003] rounded-md h-full relative">
           <img
@@ -69,7 +76,6 @@ const VideoCard = ({
             </div>
           </div>
           
-
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
             <p className="font-black text-white">{title}</p>
           </div>
@@ -77,9 +83,11 @@ const VideoCard = ({
       </div>
     );
   }
+
+  // Default video type
   const [isPlaying, setIsPlaying] = useState(false);
   const [showThumbnail, setShowThumbnail] = useState(true);
-  const videoRef = useRef(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const handlePlayPause = () => {
     if (videoRef.current) {
@@ -108,7 +116,7 @@ const VideoCard = ({
           onEnded={handleVideoEnd}
           style={{ display: showThumbnail ? 'none' : 'block' }}
         >
-          <source src={videoSrc} type="video/mp4" />
+          {videoSrc && <source src={videoSrc} type="video/mp4" />}
           Your browser does not support the video tag.
         </video>
 
