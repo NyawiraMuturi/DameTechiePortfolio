@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, ReactNode, ChangeEvent, FormEvent } from "react";
 import emailjs from '@emailjs/browser';
 import {
   Dialog,
@@ -12,17 +11,28 @@ import {Button} from "./button";
 
 import { Mail, Send, Loader2 } from "lucide-react";
 
-const MailDialog = ({ children }) => {
+interface FormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+interface MailDialogProps {
+  children: ReactNode;
+}
+
+const MailDialog = ({ children }: MailDialogProps)=> {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     subject: '',
     message: ''
   });
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -30,7 +40,7 @@ const MailDialog = ({ children }) => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
