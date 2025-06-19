@@ -84,7 +84,6 @@ const VideoCard = ({
     );
   }
 
-  // Default video type
   const [isPlaying, setIsPlaying] = useState(false);
   const [showThumbnail, setShowThumbnail] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
